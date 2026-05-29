@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music Vault</title>
+  <meta name="description" content="GitHub Pagesで動く、HTML/CSS/バニラJSだけの静的音楽まとめツール。" />
+  <link rel="stylesheet" href="style.css" />
+  <script id="schemaOrgJsonLd" type="application/ld+json">{}</script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Static Music Library</p>
+        <h1>Music Vault</h1>
+        <p class="lead">GitHub Pagesで動く、HTML/CSS/バニラJSだけの音楽まとめツール。</p>
+      </div>
+      <div class="hero-card">
+        <span id="trackCount">0 tracks</span>
+        <span id="totalDuration">--:--</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel sidebar">
+        <label class="search-label" for="searchInput">Search</label>
+        <input id="searchInput" class="search" type="search" placeholder="曲名・アーティスト・タグ・歌詞で検索" autocomplete="off" />
+
+        <section>
+          <h2>Tags</h2>
+          <div id="tagList" class="tag-list"></div>
+        </section>
+
+        <section>
+          <h2>Sort</h2>
+          <select id="sortSelect" class="select">
+            <option value="title">Title</option>
+            <option value="artist">Artist</option>
+            <option value="newest">Newest</option>
+            <option value="duration">Duration</option>
+          </select>
+        </section>
+
+        <section>
+          <h2>View</h2>
+          <div class="view-buttons" role="group" aria-label="表示切替">
+            <button id="gridViewBtn" class="ghost active" type="button">Grid</button>
+            <button id="listViewBtn" class="ghost" type="button">List</button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section class="panel player-panel">
+          <div class="cover-wrap">
+            <img id="currentCover" class="current-cover" src="assets/covers/default.svg" alt="Current cover" />
+          </div>
+          <div class="player-main">
+            <p id="nowPlayingLabel" class="eyebrow">Nothing playing</p>
+            <h2 id="currentTitle">曲を選択</h2>
+            <p id="currentMeta" class="muted">左の検索とタグで人類の雑音を減らせます。</p>
+            <audio id="audioPlayer" controls preload="metadata"></audio>
+          </div>
+        </section>
+
+        <section id="lyricsPanel" class="panel lyrics-panel" hidden>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Lyrics</p>
+              <h2>歌詞</h2>
+            </div>
+            <button id="copyLyricsBtn" class="ghost" type="button">Copy</button>
+          </div>
+          <pre id="lyricsText" class="lyrics-text"></pre>
+        </section>
+
+        <div class="toolbar">
+          <p id="resultLabel" class="muted">0件</p>
+          <button id="shuffleBtn" class="primary" type="button">Shuffle</button>
+        </div>
+
+        <section id="trackGrid" class="track-grid" aria-live="polite"></section>
+      </section>
+    </main>
+  </div>
+
+  <template id="trackCardTemplate">
+    <article class="track-card" itemscope itemtype="https://schema.org/MusicRecording">
+      <button class="play-hitarea" type="button" aria-label="再生">
+        <img class="cover" alt="" itemprop="image" />
+        <span class="play-badge">▶</span>
+      </button>
+      <div class="track-info">
+        <h3 itemprop="name"></h3>
+        <p class="artist" itemprop="byArtist"></p>
+        <p class="description" itemprop="description"></p>
+        <div class="tags"></div>
+      </div>
+      <div class="track-footer">
+        <span class="duration"></span>
+        <span class="date"></span>
+      </div>
+      <meta class="schema-url" itemprop="url" content="" />
+      <meta class="schema-duration" itemprop="duration" content="" />
+      <meta class="schema-album" itemprop="inAlbum" content="" />
+      <meta class="schema-date" itemprop="datePublished" content="" />
+    </article>
+  </template>
+
+  <script src="tracks.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
